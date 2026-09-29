@@ -323,60 +323,32 @@
       );
 
 
-    scanner.start(
+scanner.start(
 
-      {
-        facingMode: {
-          ideal: "environment"
-        }
-      },
+  {
+    facingMode: "environment"
+  },
 
+  {
+    fps: 10,
 
-      {
+    qrbox: function(viewfinderWidth, viewfinderHeight) {
 
-        fps: 10,
+      return {
+        width: Math.floor(viewfinderWidth * 0.85),
+        height: Math.floor(viewfinderHeight * 0.30)
+      };
 
+    },
 
-        qrbox:
-          function(
-            viewfinderWidth,
-            viewfinderHeight
-          ) {
+    aspectRatio: 1.7777778
 
-            return {
+  },
 
-              width:
-                Math.floor(
-                  viewfinderWidth * 0.85
-                ),
+  onScanSuccess,
+  onScanFailure
 
-              height:
-                Math.floor(
-                  viewfinderHeight * 0.30
-                )
-
-            };
-
-          },
-
-
-        aspectRatio:
-          1.7777778,
-
-
-        disableFlip:
-          false
-
-      },
-
-
-      onScanSuccess,
-
-
-      onScanFailure
-
-    )
-
+)
 
     .then(
 
