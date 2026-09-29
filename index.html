@@ -701,7 +701,7 @@
   ) {
 
     // ================================================
-    // UNIQUE TOKEN
+    // UNIQUE CALLBACK
     // ================================================
 
     currentScanToken =
@@ -712,92 +712,203 @@
         .toString(36)
         .substring(2, 12);
 
+    const callbackName =
+      "cyformScan_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .substring(2, 8);
 
     const url =
-
       BACKEND_URL +
-
       "?action=scan" +
-
       "&orderId=" +
-
-      encodeURIComponent(
-        orderId
-      ) +
-
-      "&token=" +
-
-      encodeURIComponent(
-        currentScanToken
-      );
-
+      encodeURIComponent(orderId) +
+      "&callback=" +
+      encodeURIComponent(callbackName) +
+      "&t=" +
+      Date.now();
 
     console.log(
-      "SCAN URL:",
+      "SCAN JSONP URL:",
       url
     );
-
 
     setStatus(
       "⏳ UPDATING DATABASE...",
       "processing"
     );
 
+    let finished = false;
+
+    const script =
+      document.createElement("script");
 
     // ================================================
-    // OPEN BACKEND
+    // CALLBACK FROM GOOGLE APPS SCRIPT
+    // ================================================
+
+    window[callbackName] =
+      function(result) {
+
+        if (finished) {
+          return;
+        }
+
+        finished = true;
+
+        try {
+          delete window[callbackName];
+        } catch (e) {
+          window[callbackName] = undefined;
+        }
+
+        try {
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        } catch (e) {}
+
+        clearTimeout(
+          resultPollTimer
+        );
+
+        resultPollTimer =
+          null;
+
+        handleBackendResult(
+          result,
+          null
+        );
+
+      };
+
+    // ================================================
+    // LOAD APPS SCRIPT AS JSONP
     //
-    // BACKEND PROCESS SEKALI SAHAJA
+    // NO POPUP
+    // NO NEW TAB
+    // NO CORS FETCH
+    // PROCESS SCAN ONLY ONCE
     // ================================================
 
-    const backendWindow =
-      window.open(
-        url,
-        "_blank"
-      );
+    script.src =
+      url;
 
+    script.async =
+      true;
 
-    // ================================================
-    // POPUP BLOCKED
-    // ================================================
+    script.onerror =
+      function() {
 
-    if (!backendWindow) {
+        if (finished) {
+          return;
+        }
 
-      setStatus(
-        "⚠️ POPUP BLOCKED",
-        "error"
-      );
+        finished = true;
 
-      resultElement.innerHTML =
+        try {
+          delete window[callbackName];
+        } catch (e) {}
 
-        "<div class='small'>" +
+        try {
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        } catch (e) {}
 
-        "Browser block popup. " +
+        setStatus(
+          "❌ CONNECTION ERROR",
+          "error"
+        );
 
-        "Allow popup untuk website ini." +
+        resultElement.innerHTML =
+          "<div class='result-card'>" +
+          "<div class='result-title' " +
+          "style='color:#990000'>" +
+          "❌ BACKEND ERROR" +
+          "</div>" +
+          "<div class='details'>" +
+          "<div class='detail-row'>" +
+          "<span class='detail-label'>" +
+          "MESSAGE: " +
+          "</span>" +
+          "<span class='detail-value'>" +
+          "Tidak dapat menerima response daripada Google Apps Script." +
+          "</span>" +
+          "</div>" +
+          "</div>" +
+          "</div>";
 
-        "</div>";
+        processing =
+          false;
 
-      processing =
-        false;
+        nextButton.classList.remove(
+          "hidden"
+        );
 
-      return;
+      };
 
-    }
-
-
-    console.log(
-      "BACKEND WINDOW OPENED"
+    document.body.appendChild(
+      script
     );
 
-
     // ================================================
-    // START JSONP POLLING
+    // SAFETY TIMEOUT
     // ================================================
 
-    startResultPolling(
-      currentScanToken,
-      backendWindow
+    setTimeout(
+      function() {
+
+        if (finished) {
+          return;
+        }
+
+        finished = true;
+
+        try {
+          delete window[callbackName];
+        } catch (e) {}
+
+        try {
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        } catch (e) {}
+
+        setStatus(
+          "❌ BACKEND TIMEOUT",
+          "error"
+        );
+
+        resultElement.innerHTML =
+          "<div class='result-card'>" +
+          "<div class='result-title' " +
+          "style='color:#990000'>" +
+          "❌ TIMEOUT" +
+          "</div>" +
+          "<div class='details'>" +
+          "<div class='detail-row'>" +
+          "<span class='detail-label'>" +
+          "MESSAGE: " +
+          "</span>" +
+          "<span class='detail-value'>" +
+          "Google Apps Script tidak memberi response dalam masa 15 saat." +
+          "</span>" +
+          "</div>" +
+          "</div>" +
+          "</div>";
+
+        processing =
+          false;
+
+        nextButton.classList.remove(
+          "hidden"
+        );
+
+      },
+      15000
     );
 
   }
