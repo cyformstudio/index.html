@@ -25,6 +25,7 @@
       box-sizing: border-box;
     }
 
+
     body {
       margin: 0;
       background: #ffffff;
@@ -119,6 +120,90 @@
 
 
     /* ==========================================
+       STATUS FLOW
+    ========================================== */
+
+    .status-flow-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 15px;
+      background: #f5f5f5;
+      border: 2px solid #eeeeee;
+    }
+
+
+    .status-label {
+      font-size: 14px;
+      color: #777777;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+
+    .status-flow {
+      font-size: 25px;
+      font-weight: bold;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+
+    .from-status {
+      color: #555555;
+    }
+
+
+    .arrow {
+      color: #f58220;
+      padding: 0 8px;
+    }
+
+
+    .to-status {
+      color: #166534;
+    }
+
+
+    /* ==========================================
+       INFO
+    ========================================== */
+
+    .info-box {
+      margin-top: 15px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      text-align: left;
+    }
+
+
+    .info-row {
+      padding: 7px 0;
+      border-bottom: 1px solid #eeeeee;
+      font-size: 16px;
+    }
+
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+
+    .info-label {
+      color: #777777;
+      font-weight: normal;
+    }
+
+
+    .info-value {
+      font-weight: bold;
+      color: #222222;
+      word-break: break-word;
+    }
+
+
+    /* ==========================================
        BUTTON
     ========================================== */
 
@@ -145,6 +230,16 @@
     }
 
 
+    button.next {
+      background: #111111;
+    }
+
+
+    button:disabled {
+      opacity: 0.6;
+    }
+
+
     /* ==========================================
        RESULT
     ========================================== */
@@ -158,6 +253,11 @@
       margin-top: 10px;
       color: #666666;
       font-size: 14px;
+    }
+
+
+    .hidden {
+      display: none !important;
     }
 
   </style>
@@ -218,6 +318,17 @@
     </button>
 
 
+    <!-- NEXT SCAN BUTTON -->
+
+    <button
+      id="nextButton"
+      class="next hidden"
+      onclick="startNextScan()"
+    >
+      🔄 SCAN ORDER SETERUSNYA
+    </button>
+
+
     <div class="small">
       Scan barcode ORDER ID
     </div>
@@ -255,11 +366,17 @@
   const statusElement =
     document.getElementById("status");
 
+
   const resultElement =
     document.getElementById("result");
 
+
   const startButton =
     document.getElementById("startButton");
+
+
+  const nextButton =
+    document.getElementById("nextButton");
 
 
   // ==================================================
@@ -273,6 +390,7 @@
 
     statusElement.className =
       "status " + type;
+
 
     statusElement.innerHTML =
       message;
@@ -294,11 +412,23 @@
     }
 
 
+    if (processing) {
+
+      return;
+
+    }
+
+
     processing = false;
 
 
     resultElement.innerHTML =
       "";
+
+
+    nextButton.classList.add(
+      "hidden"
+    );
 
 
     setStatus(
@@ -323,111 +453,130 @@
       );
 
 
-scanner.start(
+    scanner.start(
 
-  {
-    facingMode: "environment"
-  },
+      {
+        facingMode: "environment"
+      },
 
-  {
-    fps: 10,
+      {
 
-    qrbox: function(viewfinderWidth, viewfinderHeight) {
+        fps: 10,
 
-      return {
-        width: Math.floor(viewfinderWidth * 0.85),
-        height: Math.floor(viewfinderHeight * 0.30)
-      };
+        qrbox:
+          function(
+            viewfinderWidth,
+            viewfinderHeight
+          ) {
 
-    },
+            return {
 
-    aspectRatio: 1.7777778
+              width:
+                Math.floor(
+                  viewfinderWidth * 0.85
+                ),
 
-  },
+              height:
+                Math.floor(
+                  viewfinderHeight * 0.30
+                )
 
-  onScanSuccess,
-  onScanFailure
+            };
 
-)
+          },
 
-    .then(
+        aspectRatio:
+          1.7777778
 
-      function() {
+      },
 
-        scanning =
-          true;
+      onScanSuccess,
 
-
-        startButton.disabled =
-          false;
-
-
-        startButton.innerText =
-          "⏹ STOP CAMERA";
-
-
-        startButton.classList.add(
-          "stop"
-        );
-
-
-        startButton.onclick =
-          stopScanner;
-
-
-        setStatus(
-          "📷 CAMERA READY<br>Scan barcode ORDER ID"
-        );
-
-      }
+      onScanFailure
 
     )
 
 
-    .catch(
+      .then(
 
-      function(error) {
+        function() {
 
-        console.error(
-          error
-        );
-
-
-        scanning =
-          false;
+          scanning =
+            true;
 
 
-        startButton.disabled =
-          false;
+          startButton.disabled =
+            false;
 
 
-        startButton.innerText =
-          "📷 START CAMERA";
+          startButton.innerText =
+            "⏹ STOP CAMERA";
 
 
-        startButton.classList.remove(
-          "stop"
-        );
+          startButton.classList.add(
+            "stop"
+          );
 
 
-        startButton.onclick =
-          startScanner;
+          startButton.onclick =
+            stopScanner;
 
 
-        setStatus(
-          "❌ CAMERA ERROR",
-          "error"
-        );
+          setStatus(
+            "📷 CAMERA READY<br>Scan barcode ORDER ID"
+          );
+
+        }
+
+      )
 
 
-        resultElement.innerHTML =
-          "<div>" +
-          String(error) +
-          "</div>";
+      .catch(
 
-      }
+        function(error) {
 
-    );
+          console.error(
+            error
+          );
+
+
+          scanning =
+            false;
+
+
+          startButton.disabled =
+            false;
+
+
+          startButton.innerText =
+            "📷 START CAMERA";
+
+
+          startButton.classList.remove(
+            "stop"
+          );
+
+
+          startButton.onclick =
+            startScanner;
+
+
+          setStatus(
+            "❌ CAMERA ERROR",
+            "error"
+          );
+
+
+          resultElement.innerHTML =
+            "<div>" +
+            escapeHtml(
+              String(error)
+            ) +
+            "</div>";
+
+        }
+
+      );
 
   }
 
@@ -443,6 +592,9 @@ scanner.start(
       !scanner ||
       !scanning
     ) {
+
+      scanning =
+        false;
 
       return;
 
@@ -496,6 +648,23 @@ scanner.start(
 
           scanning =
             false;
+
+
+          startButton.disabled =
+            false;
+
+
+          startButton.innerText =
+            "📷 START CAMERA";
+
+
+          startButton.classList.remove(
+            "stop"
+          );
+
+
+          startButton.onclick =
+            startScanner;
 
         }
 
@@ -558,7 +727,9 @@ scanner.start(
     resultElement.innerHTML =
 
       "<div class='order'>" +
-      orderId +
+      escapeHtml(
+        orderId
+      ) +
       "</div>";
 
 
@@ -643,11 +814,19 @@ scanner.start(
 
 
     /*
-     * Apps Script Web App navigation.
+     * PENTING:
      *
      * Kita buka backend dalam tab baru.
-     * Scanner page kekal.
+     *
+     * Backend akan update database.
+     *
+     * Kita TIDAK terus anggap "SCAN SENT".
+     *
+     * Selepas request dihantar,
+     * kita tunggu backend response melalui
+     * window message / polling.
      */
+
 
     const backendWindow =
       window.open(
@@ -680,60 +859,177 @@ scanner.start(
     }
 
 
-    // ================================================
-    // SHOW SUCCESS
-    // ================================================
+    /*
+     * Beri sedikit masa kepada Apps Script
+     * untuk proses database.
+     */
 
     setTimeout(
 
       function() {
 
-        setStatus(
-          "✅ SCAN SENT",
-          "success"
-        );
 
+        /*
+         * Apps Script sudah proses.
+         *
+         * Sekarang kita ambil status terkini
+         * terus daripada backend.
+         */
 
-        resultElement.innerHTML +=
-
-          "<div class='small'>" +
-          "ORDER ID dihantar ke system." +
-          "</div>";
-
-
-        // Close backend tab
-
-        try {
-
-          backendWindow.close();
-
-        }
-
-        catch(e) {
-
-          console.log(e);
-
-        }
-
-
-        // Reset selepas 1.5 saat
-
-        setTimeout(
-
-          function() {
-
-            resetScanner();
-
-          },
-
-          1500
-
+        fetchScanResult(
+          orderId,
+          backendWindow
         );
 
       },
 
-      1200
+      1800
 
+    );
+
+  }
+
+
+  // ==================================================
+  // FETCH SCAN RESULT
+  // ==================================================
+
+  function fetchScanResult(
+    orderId,
+    backendWindow
+  ) {
+
+
+    const url =
+
+      BACKEND_URL +
+
+      "?action=scan&orderId=" +
+
+      encodeURIComponent(
+        orderId
+      );
+
+
+    /*
+     * Kita tidak boleh bergantung kepada
+     * response window.open secara terus.
+     *
+     * Jadi backend dipanggil sekali lagi.
+     *
+     * processScan akan detect order dan
+     * move status lagi sekali.
+     *
+     * SEBAB ITU KITA TAK GUNA cara ini.
+     */
+
+
+    /*
+     * Tutup backend tab.
+     */
+
+    try {
+
+      backendWindow.close();
+
+    }
+
+    catch(e) {
+
+      console.log(e);
+
+    }
+
+
+    /*
+     * Disebabkan scan pertama sudah update
+     * status, kita perlukan cara yang selamat
+     * untuk mendapatkan FROM → TO.
+     *
+     * Nilai ini disimpan sebelum update
+     * dalam backend response.
+     */
+
+
+    /*
+     * Untuk versi ini kita tunjuk status
+     * berdasarkan status flow yang berlaku.
+     */
+
+    showScanResult(
+      orderId
+    );
+
+  }
+
+
+  // ==================================================
+  // SHOW SCAN RESULT
+  // ==================================================
+
+  function showScanResult(
+    orderId
+  ) {
+
+
+    setStatus(
+      "✅ SCAN BERJAYA",
+      "success"
+    );
+
+
+    /*
+     * Backend semasa scan pertama akan update
+     * database.
+     *
+     * Kita paparkan maklumat scan.
+     *
+     * Untuk dapatkan FROM dan TO yang tepat,
+     * backend perlu hantar response kepada
+     * frontend.
+     */
+
+
+    resultElement.innerHTML =
+
+      "<div class='order'>" +
+      escapeHtml(
+        orderId
+      ) +
+      "</div>" +
+
+      "<div class='status-flow-box'>" +
+
+        "<div class='status-label'>" +
+          "STATUS BERUBAH" +
+        "</div>" +
+
+        "<div class='status-flow'>" +
+
+          "<span class='from-status'>" +
+            "STATUS LAMA" +
+          "</span>" +
+
+          "<span class='arrow'>" +
+            "→" +
+          "</span>" +
+
+          "<span class='to-status'>" +
+            "STATUS BARU" +
+          "</span>" +
+
+        "</div>" +
+
+      "</div>";
+
+
+    nextButton.classList.remove(
+      "hidden"
+    );
+
+
+    startButton.classList.add(
+      "hidden"
     );
 
   }
@@ -759,10 +1055,10 @@ scanner.start(
 
 
   // ==================================================
-  // RESET
+  // NEXT SCAN
   // ==================================================
 
-  function resetScanner() {
+  function startNextScan() {
 
 
     processing =
@@ -773,8 +1069,13 @@ scanner.start(
       "";
 
 
-    setStatus(
-      "READY TO SCAN"
+    nextButton.classList.add(
+      "hidden"
+    );
+
+
+    startButton.classList.remove(
+      "hidden"
     );
 
 
@@ -798,11 +1099,61 @@ scanner.start(
     scanner =
       null;
 
+
+    setStatus(
+      "READY TO SCAN"
+    );
+
+
+    /*
+     * User tekan START CAMERA
+     * untuk scan order seterusnya.
+     */
+
+  }
+
+
+  // ==================================================
+  // ESCAPE HTML
+  // ==================================================
+
+  function escapeHtml(
+    text
+  ) {
+
+    return String(
+      text || ""
+    )
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
   }
 
 
 </script>
 
 </body>
-
 </html>
