@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>CYFORM PHONE SCANNER</title>
 
-  <script src="https://unpkg.com/html5-qrcode"
-          type="text/javascript"></script>
+  <!-- BARCODE SCANNER -->
+  <script
+    src="https://unpkg.com/html5-qrcode"
+    type="text/javascript">
+  </script>
+
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -22,6 +32,11 @@
       text-align: center;
     }
 
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
     .header {
       background: #f58220;
       color: white;
@@ -30,6 +45,11 @@
       font-weight: bold;
     }
 
+
+    /* ==========================================
+       CONTAINER
+    ========================================== */
+
     .container {
       width: 100%;
       max-width: 500px;
@@ -37,10 +57,26 @@
       padding: 20px;
     }
 
+
+    /* ==========================================
+       CAMERA
+    ========================================== */
+
     #reader {
       width: 100%;
       margin-top: 20px;
     }
+
+
+    #reader video {
+      width: 100% !important;
+      border-radius: 12px;
+    }
+
+
+    /* ==========================================
+       STATUS
+    ========================================== */
 
     .status {
       margin-top: 20px;
@@ -51,19 +87,45 @@
       font-weight: bold;
     }
 
+
     .success {
       background: #d9ead3;
       color: #166534;
     }
+
 
     .error {
       background: #f4cccc;
       color: #990000;
     }
 
+
+    .processing {
+      background: #fff2cc;
+      color: #7f6000;
+    }
+
+
+    /* ==========================================
+       ORDER
+    ========================================== */
+
+    .order {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 15px;
+      word-break: break-all;
+    }
+
+
+    /* ==========================================
+       BUTTON
+    ========================================== */
+
     button {
       margin-top: 20px;
-      padding: 15px 25px;
+      width: 100%;
+      padding: 17px 25px;
       border: none;
       border-radius: 10px;
       background: #f58220;
@@ -72,45 +134,103 @@
       font-weight: bold;
     }
 
-    .order {
-      font-size: 26px;
-      margin-top: 10px;
+
+    button:active {
+      transform: scale(0.98);
     }
 
-    .arrow {
-      font-size: 24px;
-      margin-top: 10px;
+
+    button.stop {
+      background: #555555;
     }
+
+
+    /* ==========================================
+       RESULT
+    ========================================== */
+
+    #result {
+      margin-top: 15px;
+    }
+
+
+    .small {
+      margin-top: 10px;
+      color: #666666;
+      font-size: 14px;
+    }
+
   </style>
+
 </head>
 
+
 <body>
+
+
+  <!-- ==========================================
+       HEADER
+  ========================================== -->
 
   <div class="header">
     CYFORM PHONE SCANNER
   </div>
 
+
   <div class="container">
+
+
+    <!-- ========================================
+         CAMERA
+    ======================================== -->
 
     <div id="reader"></div>
 
-    <div id="status" class="status">
+
+    <!-- ========================================
+         STATUS
+    ======================================== -->
+
+    <div
+      id="status"
+      class="status"
+    >
       READY TO SCAN
     </div>
 
+
+    <!-- ========================================
+         RESULT
+    ======================================== -->
+
     <div id="result"></div>
 
-    <button onclick="startScanner()">
+
+    <!-- ========================================
+         BUTTON
+    ======================================== -->
+
+    <button
+      id="startButton"
+      onclick="startScanner()"
+    >
       📷 START CAMERA
     </button>
+
+
+    <div class="small">
+      Scan barcode ORDER ID
+    </div>
+
 
   </div>
 
 
 <script>
 
+
   // ==================================================
-  // CYFORM GOOGLE APPS SCRIPT BACKEND
+  // GOOGLE APPS SCRIPT BACKEND
   // ==================================================
 
   const BACKEND_URL =
@@ -122,8 +242,42 @@
   // ==================================================
 
   let scanner = null;
+
   let scanning = false;
+
   let processing = false;
+
+
+  // ==================================================
+  // ELEMENTS
+  // ==================================================
+
+  const statusElement =
+    document.getElementById("status");
+
+  const resultElement =
+    document.getElementById("result");
+
+  const startButton =
+    document.getElementById("startButton");
+
+
+  // ==================================================
+  // STATUS FUNCTION
+  // ==================================================
+
+  function setStatus(
+    message,
+    type = ""
+  ) {
+
+    statusElement.className =
+      "status " + type;
+
+    statusElement.innerHTML =
+      message;
+
+  }
 
 
   // ==================================================
@@ -132,68 +286,248 @@
 
   function startScanner() {
 
+
     if (scanning) {
+
       return;
+
     }
+
 
     processing = false;
 
-    document.getElementById("status").className =
-      "status";
 
-    document.getElementById("status").innerHTML =
-      "📷 CAMERA STARTING...";
+    resultElement.innerHTML =
+      "";
 
-    scanner = new Html5Qrcode("reader");
+
+    setStatus(
+      "📷 CAMERA STARTING...",
+      "processing"
+    );
+
+
+    startButton.innerText =
+      "⏳ CAMERA STARTING...";
+
+
+    startButton.disabled =
+      true;
+
+
+    // Create scanner
+
+    scanner =
+      new Html5Qrcode(
+        "reader"
+      );
+
 
     scanner.start(
 
       {
-        facingMode: "environment"
+        facingMode: {
+          ideal: "environment"
+        }
       },
+
 
       {
+
         fps: 10,
 
-        qrbox: function(viewfinderWidth, viewfinderHeight) {
 
-          return {
-            width: Math.floor(viewfinderWidth * 0.85),
-            height: Math.floor(viewfinderHeight * 0.30)
-          };
+        qrbox:
+          function(
+            viewfinderWidth,
+            viewfinderHeight
+          ) {
 
-        },
+            return {
 
-        aspectRatio: 1.7777778
+              width:
+                Math.floor(
+                  viewfinderWidth * 0.85
+                ),
+
+              height:
+                Math.floor(
+                  viewfinderHeight * 0.30
+                )
+
+            };
+
+          },
+
+
+        aspectRatio:
+          1.7777778,
+
+
+        disableFlip:
+          false
 
       },
 
+
       onScanSuccess,
+
 
       onScanFailure
 
     )
-    .then(function() {
 
-      scanning = true;
 
-      document.getElementById("status")
-        .innerHTML =
-        "📷 CAMERA READY<br>Scan barcode ORDER ID";
+    .then(
 
-    })
-    .catch(function(error) {
+      function() {
 
-      document.getElementById("status")
-        .className =
-        "status error";
+        scanning =
+          true;
 
-      document.getElementById("status")
-        .innerHTML =
-        "❌ CAMERA ERROR<br>" +
-        error;
 
-    });
+        startButton.disabled =
+          false;
+
+
+        startButton.innerText =
+          "⏹ STOP CAMERA";
+
+
+        startButton.classList.add(
+          "stop"
+        );
+
+
+        startButton.onclick =
+          stopScanner;
+
+
+        setStatus(
+          "📷 CAMERA READY<br>Scan barcode ORDER ID"
+        );
+
+      }
+
+    )
+
+
+    .catch(
+
+      function(error) {
+
+        console.error(
+          error
+        );
+
+
+        scanning =
+          false;
+
+
+        startButton.disabled =
+          false;
+
+
+        startButton.innerText =
+          "📷 START CAMERA";
+
+
+        startButton.classList.remove(
+          "stop"
+        );
+
+
+        startButton.onclick =
+          startScanner;
+
+
+        setStatus(
+          "❌ CAMERA ERROR",
+          "error"
+        );
+
+
+        resultElement.innerHTML =
+          "<div>" +
+          String(error) +
+          "</div>";
+
+      }
+
+    );
+
+  }
+
+
+  // ==================================================
+  // STOP CAMERA
+  // ==================================================
+
+  function stopScanner() {
+
+
+    if (
+      !scanner ||
+      !scanning
+    ) {
+
+      return;
+
+    }
+
+
+    scanner
+      .stop()
+
+      .then(
+
+        function() {
+
+          scanning =
+            false;
+
+
+          startButton.disabled =
+            false;
+
+
+          startButton.innerText =
+            "📷 START CAMERA";
+
+
+          startButton.classList.remove(
+            "stop"
+          );
+
+
+          startButton.onclick =
+            startScanner;
+
+
+          setStatus(
+            "CAMERA STOPPED"
+          );
+
+        }
+
+      )
+
+      .catch(
+
+        function(error) {
+
+          console.error(
+            error
+          );
+
+
+          scanning =
+            false;
+
+        }
+
+      );
 
   }
 
@@ -202,66 +536,233 @@
   // SCAN SUCCESS
   // ==================================================
 
-  function onScanSuccess(decodedText, decodedResult) {
+  function onScanSuccess(
+    decodedText,
+    decodedResult
+  ) {
+
+
+    // Prevent duplicate scans
 
     if (processing) {
+
       return;
+
     }
 
-    processing = true;
+
+    processing =
+      true;
+
+
+    // Get ORDER ID
 
     const orderId =
-      String(decodedText).trim();
+      String(
+        decodedText || ""
+      ).trim();
 
 
-    // Stop camera temporarily
+    if (!orderId) {
 
-    if (scanner && scanning) {
+      processing =
+        false;
 
-      scanner.stop()
-        .then(function() {
-
-          scanning = false;
-
-        })
-        .catch(function() {
-
-          scanning = false;
-
-        });
+      return;
 
     }
 
 
-    document.getElementById("status")
-      .className =
-      "status";
-
-    document.getElementById("status")
-      .innerHTML =
-      "⏳ SCANNING...";
+    console.log(
+      "SCANNED ORDER:",
+      orderId
+    );
 
 
-    document.getElementById("result")
-      .innerHTML =
+    // ================================================
+    // SHOW ORDER
+    // ================================================
+
+    resultElement.innerHTML =
+
       "<div class='order'>" +
       orderId +
       "</div>";
 
 
-    // ==================================================
-    // SEND TO GOOGLE SHEET
-    // ==================================================
+    setStatus(
+      "⏳ PROCESSING ORDER...",
+      "processing"
+    );
+
+
+    // ================================================
+    // STOP CAMERA
+    // ================================================
+
+    if (
+      scanner &&
+      scanning
+    ) {
+
+      scanner
+        .stop()
+
+        .then(
+
+          function() {
+
+            scanning =
+              false;
+
+          }
+
+        )
+
+        .catch(
+
+          function() {
+
+            scanning =
+              false;
+
+          }
+
+        );
+
+    }
+
+
+    // ================================================
+    // SEND TO GOOGLE APPS SCRIPT
+    // ================================================
+
+    sendToBackend(
+      orderId
+    );
+
+  }
+
+
+  // ==================================================
+  // SEND ORDER TO BACKEND
+  // ==================================================
+
+  function sendToBackend(
+    orderId
+  ) {
+
 
     const url =
+
       BACKEND_URL +
+
       "?action=scan&orderId=" +
-      encodeURIComponent(orderId);
+
+      encodeURIComponent(
+        orderId
+      );
 
 
-    // Navigate to backend
+    console.log(
+      "BACKEND:",
+      url
+    );
 
-    window.location.href = url;
+
+    /*
+     * Apps Script Web App navigation.
+     *
+     * Kita buka backend dalam tab baru.
+     * Scanner page kekal.
+     */
+
+    const backendWindow =
+      window.open(
+        url,
+        "_blank"
+      );
+
+
+    if (!backendWindow) {
+
+      setStatus(
+        "⚠️ BLOCKED BY BROWSER",
+        "error"
+      );
+
+
+      resultElement.innerHTML +=
+
+        "<div class='small'>" +
+        "Allow popups untuk website ini." +
+        "</div>";
+
+
+      processing =
+        false;
+
+
+      return;
+
+    }
+
+
+    // ================================================
+    // SHOW SUCCESS
+    // ================================================
+
+    setTimeout(
+
+      function() {
+
+        setStatus(
+          "✅ SCAN SENT",
+          "success"
+        );
+
+
+        resultElement.innerHTML +=
+
+          "<div class='small'>" +
+          "ORDER ID dihantar ke system." +
+          "</div>";
+
+
+        // Close backend tab
+
+        try {
+
+          backendWindow.close();
+
+        }
+
+        catch(e) {
+
+          console.log(e);
+
+        }
+
+
+        // Reset selepas 1.5 saat
+
+        setTimeout(
+
+          function() {
+
+            resetScanner();
+
+          },
+
+          1500
+
+        );
+
+      },
+
+      1200
+
+    );
 
   }
 
@@ -270,14 +771,66 @@
   // SCAN FAILURE
   // ==================================================
 
-  function onScanFailure(error) {
+  function onScanFailure(
+    errorMessage
+  ) {
 
-    // Ignore normal camera frames
-    // until barcode is detected.
+    /*
+     * Jangan paparkan error.
+     *
+     * html5-qrcode akan panggil function ni
+     * banyak kali ketika camera sedang mencari
+     * barcode.
+     */
 
   }
+
+
+  // ==================================================
+  // RESET
+  // ==================================================
+
+  function resetScanner() {
+
+
+    processing =
+      false;
+
+
+    resultElement.innerHTML =
+      "";
+
+
+    setStatus(
+      "READY TO SCAN"
+    );
+
+
+    startButton.disabled =
+      false;
+
+
+    startButton.innerText =
+      "📷 START CAMERA";
+
+
+    startButton.classList.remove(
+      "stop"
+    );
+
+
+    startButton.onclick =
+      startScanner;
+
+
+    scanner =
+      null;
+
+  }
+
 
 </script>
 
 </body>
+
 </html>
