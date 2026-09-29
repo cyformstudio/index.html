@@ -3,459 +3,569 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <title>CYFORM PHONE SCANNER</title>
+<title>CYFORM PHONE SCANNER</title>
 
-  <script
-    src="https://unpkg.com/html5-qrcode"
-    type="text/javascript">
-  </script>
+<script
+  src="https://unpkg.com/html5-qrcode"
+  type="text/javascript">
+</script>
 
-  <style>
+<style>
 
-    * {
-      box-sizing: border-box;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      background: #ffffff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-    .header {
-      background: #f58220;
-      color: white;
-      padding: 18px 10px;
-      font-size: 24px;
-      font-weight: bold;
-    }
+.header {
+  background: #f58220;
+  color: white;
+  padding: 18px 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
 
-    .container {
-      width: 100%;
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
-    }
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+}
 
-    #reader {
-      width: 100%;
-      margin-top: 20px;
-    }
+#reader {
+  width: 100%;
+  margin-top: 20px;
+}
 
-    #reader video {
-      width: 100% !important;
-      border-radius: 12px;
-    }
+#reader video {
+  width: 100% !important;
+  border-radius: 12px;
+}
 
-    .status {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background: #eeeeee;
-      font-size: 18px;
-      font-weight: bold;
-    }
+.status {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #eeeeee;
+  font-size: 18px;
+  font-weight: bold;
+}
 
-    .success {
-      background: #d9ead3;
-      color: #166534;
-    }
+.success {
+  background: #d9ead3;
+  color: #166534;
+}
 
-    .error {
-      background: #f4cccc;
-      color: #990000;
-    }
+.error {
+  background: #f4cccc;
+  color: #990000;
+}
 
-    .processing {
-      background: #fff2cc;
-      color: #7f6000;
-    }
+.processing {
+  background: #fff2cc;
+  color: #7f6000;
+}
 
-    .order {
-      font-size: 28px;
-      font-weight: bold;
-      margin-top: 15px;
-      word-break: break-all;
-    }
+.order {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 15px;
+  word-break: break-all;
+}
 
-    .status-flow-box {
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 15px;
-      background: #f5f5f5;
-      border: 2px solid #eeeeee;
-    }
+.status-flow-box {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background: #f5f5f5;
+  border: 2px solid #eeeeee;
+}
 
-    .status-label {
-      font-size: 14px;
-      color: #777777;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+.status-label {
+  font-size: 14px;
+  color: #777777;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
-    .status-flow {
-      font-size: 25px;
-      font-weight: bold;
-      line-height: 1.5;
-      word-break: break-word;
-    }
+.status-flow {
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 1.5;
+  word-break: break-word;
+}
 
-    .from-status {
-      color: #555555;
-    }
+.from-status {
+  color: #555555;
+}
 
-    .arrow {
-      color: #f58220;
-      padding: 0 8px;
-    }
+.arrow {
+  color: #f58220;
+  padding: 0 8px;
+}
 
-    .to-status {
-      color: #166534;
-    }
+.to-status {
+  color: #166534;
+}
 
-    .info-box {
-      margin-top: 15px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #ffffff;
-      border: 1px solid #dddddd;
-      text-align: left;
-    }
+.details {
+  margin-top: 20px;
+  text-align: left;
+  background: white;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  padding: 15px;
+}
 
-    .info-row {
-      padding: 7px 0;
-      border-bottom: 1px solid #eeeeee;
-      font-size: 16px;
-    }
+.detail-row {
+  padding: 8px 0;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 15px;
+}
 
-    .info-row:last-child {
-      border-bottom: none;
-    }
+.detail-row:last-child {
+  border-bottom: none;
+}
 
-    .info-label {
-      color: #777777;
-      font-weight: normal;
-    }
+.detail-label {
+  color: #777777;
+}
 
-    .info-value {
-      font-weight: bold;
-      color: #222222;
-      word-break: break-word;
-    }
+.detail-value {
+  font-weight: bold;
+  color: #222222;
+  word-break: break-word;
+}
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 17px 25px;
-      border: none;
-      border-radius: 10px;
-      background: #f58220;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 17px 25px;
+  border: none;
+  border-radius: 10px;
+  background: #f58220;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    button:active {
-      transform: scale(0.98);
-    }
+button:active {
+  transform: scale(0.98);
+}
 
-    button.stop {
-      background: #555555;
-    }
+button.stop {
+  background: #555555;
+}
 
-    button.next {
-      background: #111111;
-    }
+button.next {
+  background: #111111;
+}
 
-    button:disabled {
-      opacity: 0.6;
-    }
+button:disabled {
+  opacity: 0.6;
+}
 
-    #result {
-      margin-top: 15px;
-    }
+.small {
+  margin-top: 10px;
+  color: #666666;
+  font-size: 14px;
+}
 
-    .small {
-      margin-top: 10px;
-      color: #666666;
-      font-size: 14px;
-    }
+.hidden {
+  display: none !important;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.result-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 2px solid #f58220;
+  border-radius: 15px;
+  text-align: center;
+}
 
-    .result-card {
-      margin-top: 20px;
-      padding: 20px;
-      background: #f8f8f8;
-      border: 2px solid #f58220;
-      border-radius: 15px;
-      text-align: center;
-    }
+.result-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #166534;
+  margin-bottom: 15px;
+}
 
-    .result-title {
-      font-size: 22px;
-      font-weight: bold;
-      color: #166534;
-      margin-bottom: 15px;
-    }
-
-    .details {
-      margin-top: 20px;
-      text-align: left;
-      background: white;
-      border: 1px solid #dddddd;
-      border-radius: 10px;
-      padding: 15px;
-    }
-
-    .detail-row {
-      padding: 8px 0;
-      border-bottom: 1px solid #eeeeee;
-      font-size: 15px;
-    }
-
-    .detail-row:last-child {
-      border-bottom: none;
-    }
-
-    .detail-label {
-      color: #777777;
-    }
-
-    .detail-value {
-      font-weight: bold;
-      color: #222222;
-      word-break: break-word;
-    }
-
-  </style>
+</style>
 
 </head>
 
 
 <body>
 
-  <div class="header">
-    CYFORM PHONE SCANNER
-  </div>
+
+<div class="header">
+  CYFORM PHONE SCANNER
+</div>
 
 
-  <div class="container">
+<div class="container">
 
-    <div id="reader"></div>
 
-    <div
-      id="status"
-      class="status"
-    >
-      READY TO SCAN
-    </div>
+<div id="reader"></div>
 
-    <div id="result"></div>
 
-    <button
-      id="startButton"
-      onclick="startScanner()"
-    >
-      📷 START CAMERA
-    </button>
+<div
+  id="status"
+  class="status"
+>
+READY TO SCAN
+</div>
 
-    <button
-      id="nextButton"
-      class="next hidden"
-      onclick="startNextScan()"
-    >
-      🔄 SCAN ORDER SETERUSNYA
-    </button>
 
-    <div class="small">
-      Scan barcode ORDER ID
-    </div>
+<div id="result"></div>
 
-  </div>
+
+<button
+  id="startButton"
+  onclick="startScanner()"
+>
+📷 START CAMERA
+</button>
+
+
+<button
+  id="nextButton"
+  class="next hidden"
+  onclick="startNextScan()"
+>
+🔄 SCAN ORDER SETERUSNYA
+</button>
+
+
+<div class="small">
+Scan barcode ORDER ID
+</div>
+
+
+</div>
 
 
 <script>
 
 
-  // ==================================================
-  // GOOGLE APPS SCRIPT BACKEND
-  // ==================================================
+// ==================================================
+// GOOGLE APPS SCRIPT BACKEND
+// ==================================================
 
-  const BACKEND_URL =
-    "https://script.google.com/macros/s/AKfycbw9smho6W_Qr3jrxHdR_M1faez_FOPkwXTL9UdX7da_WlplzJGIw2uPDIVQRoiF-qIDiQ/exec";
-
-
-  // ==================================================
-  // VARIABLES
-  // ==================================================
-
-  let scanner = null;
-
-  let scanning = false;
-
-  let processing = false;
-
-  let resultPollTimer = null;
-
-  let currentScanToken = null;
+const BACKEND_URL =
+"https://script.google.com/macros/s/AKfycbw9smho6W_Qr3jrxHdR_M1faez_FOPkwXTL9UdX7da_WlplzJGIw2uPDIVQRoiF-qIDiQ/exec";
 
 
-  // ==================================================
-  // ELEMENTS
-  // ==================================================
+// ==================================================
+// VARIABLES
+// ==================================================
 
-  const statusElement =
-    document.getElementById("status");
+let scanner = null;
 
-  const resultElement =
-    document.getElementById("result");
+let scanning = false;
 
-  const startButton =
-    document.getElementById("startButton");
+let processing = false;
 
-  const nextButton =
-    document.getElementById("nextButton");
+let currentCallbackName = null;
+
+let currentCallbackScript = null;
+
+let currentTimeout = null;
 
 
-  // ==================================================
-  // STATUS
-  // ==================================================
+// ==================================================
+// ELEMENTS
+// ==================================================
 
-  function setStatus(
-    message,
-    type = ""
+const statusElement =
+document.getElementById(
+  "status"
+);
+
+const resultElement =
+document.getElementById(
+  "result"
+);
+
+const startButton =
+document.getElementById(
+  "startButton"
+);
+
+const nextButton =
+document.getElementById(
+  "nextButton"
+);
+
+
+// ==================================================
+// STATUS
+// ==================================================
+
+function setStatus(
+  message,
+  type = ""
+) {
+
+  statusElement.className =
+    "status " + type;
+
+  statusElement.innerHTML =
+    message;
+
+}
+
+
+// ==================================================
+// START CAMERA
+// ==================================================
+
+function startScanner() {
+
+  if (scanning) {
+    return;
+  }
+
+  if (processing) {
+    return;
+  }
+
+
+  processing = false;
+
+  resultElement.innerHTML = "";
+
+  nextButton.classList.add(
+    "hidden"
+  );
+
+
+  startButton.disabled =
+    true;
+
+  startButton.innerText =
+    "⏳ CAMERA STARTING...";
+
+
+  setStatus(
+    "📷 CAMERA STARTING...",
+    "processing"
+  );
+
+
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  scanner.start(
+
+    {
+      facingMode:
+        "environment"
+    },
+
+    {
+
+      fps: 10,
+
+      qrbox:
+        function(
+          viewfinderWidth,
+          viewfinderHeight
+        ) {
+
+          return {
+
+            width:
+              Math.floor(
+                viewfinderWidth * 0.85
+              ),
+
+            height:
+              Math.floor(
+                viewfinderHeight * 0.30
+              )
+
+          };
+
+        },
+
+      aspectRatio:
+        1.7777778
+
+    },
+
+    onScanSuccess,
+
+    onScanFailure
+
+  )
+
+  .then(
+
+    function() {
+
+      scanning =
+        true;
+
+
+      startButton.disabled =
+        false;
+
+
+      startButton.innerText =
+        "⏹ STOP CAMERA";
+
+
+      startButton.classList.add(
+        "stop"
+      );
+
+
+      startButton.onclick =
+        stopScanner;
+
+
+      setStatus(
+        "📷 CAMERA READY<br>Scan barcode ORDER ID"
+      );
+
+    }
+
+  )
+
+  .catch(
+
+    function(error) {
+
+      console.error(
+        error
+      );
+
+
+      scanning =
+        false;
+
+      processing =
+        false;
+
+
+      startButton.disabled =
+        false;
+
+
+      startButton.innerText =
+        "📷 START CAMERA";
+
+
+      startButton.classList.remove(
+        "stop"
+      );
+
+
+      startButton.onclick =
+        startScanner;
+
+
+      setStatus(
+        "❌ CAMERA ERROR",
+        "error"
+      );
+
+
+      resultElement.innerHTML =
+
+        "<div class='result-card'>" +
+
+        "<div class='result-title' " +
+        "style='color:#990000'>" +
+
+        "CAMERA ERROR" +
+
+        "</div>" +
+
+        "<div class='details'>" +
+
+        escapeHtml(
+          String(error)
+        ) +
+
+        "</div>" +
+
+        "</div>";
+
+    }
+
+  );
+
+}
+
+
+// ==================================================
+// STOP CAMERA
+// ==================================================
+
+function stopScanner() {
+
+  if (
+    !scanner ||
+    !scanning
   ) {
 
-    statusElement.className =
-      "status " + type;
+    scanning = false;
 
-    statusElement.innerHTML =
-      message;
+    return;
 
   }
 
 
-  // ==================================================
-  // START CAMERA
-  // ==================================================
-
-  function startScanner() {
-
-    if (scanning) {
-      return;
-    }
-
-    if (processing) {
-      return;
-    }
-
-    processing = false;
-
-    resultElement.innerHTML = "";
-
-    nextButton.classList.add(
-      "hidden"
-    );
-
-    startButton.disabled =
-      true;
-
-    startButton.innerText =
-      "⏳ CAMERA STARTING...";
-
-    startButton.classList.remove(
-      "stop"
-    );
-
-    setStatus(
-      "📷 CAMERA STARTING...",
-      "processing"
-    );
-
-
-    scanner =
-      new Html5Qrcode(
-        "reader"
-      );
-
-
-    scanner.start(
-
-      {
-        facingMode: "environment"
-      },
-
-      {
-
-        fps: 10,
-
-        qrbox:
-          function(
-            viewfinderWidth,
-            viewfinderHeight
-          ) {
-
-            return {
-
-              width:
-                Math.floor(
-                  viewfinderWidth * 0.85
-                ),
-
-              height:
-                Math.floor(
-                  viewfinderHeight * 0.30
-                )
-
-            };
-
-          },
-
-        aspectRatio:
-          1.7777778
-
-      },
-
-      onScanSuccess,
-
-      onScanFailure
-
-    )
+  scanner
+    .stop()
 
     .then(
 
       function() {
 
         scanning =
-          true;
+          false;
+
 
         startButton.disabled =
           false;
 
-        startButton.innerText =
-          "⏹ STOP CAMERA";
 
-        startButton.classList.add(
+        startButton.innerText =
+          "📷 START CAMERA";
+
+
+        startButton.classList.remove(
           "stop"
         );
 
+
         startButton.onclick =
-          stopScanner;
+          startScanner;
+
 
         setStatus(
-          "📷 CAMERA READY<br>Scan barcode ORDER ID"
+          "CAMERA STOPPED"
         );
 
       }
@@ -466,69 +576,103 @@
 
       function(error) {
 
-        console.error(
+        console.log(
           error
         );
+
 
         scanning =
           false;
 
-        processing =
-          false;
 
         startButton.disabled =
           false;
 
+
         startButton.innerText =
           "📷 START CAMERA";
+
 
         startButton.classList.remove(
           "stop"
         );
 
+
         startButton.onclick =
           startScanner;
-
-        setStatus(
-          "❌ CAMERA ERROR",
-          "error"
-        );
-
-        resultElement.innerHTML =
-
-          "<div class='small'>" +
-
-          escapeHtml(
-            String(error)
-          ) +
-
-          "</div>";
 
       }
 
     );
 
+}
+
+
+// ==================================================
+// SCAN SUCCESS
+// ==================================================
+
+function onScanSuccess(
+  decodedText,
+  decodedResult
+) {
+
+  if (processing) {
+    return;
   }
 
 
-  // ==================================================
+  processing =
+    true;
+
+
+  const orderId =
+    String(
+      decodedText || ""
+    ).trim();
+
+
+  if (!orderId) {
+
+    processing =
+      false;
+
+    return;
+
+  }
+
+
+  console.log(
+    "SCANNED ORDER:",
+    orderId
+  );
+
+
+  resultElement.innerHTML =
+
+    "<div class='order'>" +
+
+    escapeHtml(
+      orderId
+    ) +
+
+    "</div>";
+
+
+  setStatus(
+    "⏳ UPDATING DATABASE...",
+    "processing"
+  );
+
+
+  // ================================================
   // STOP CAMERA
-  // ==================================================
+  // ================================================
 
-  function stopScanner() {
-
-    if (
-      !scanner ||
-      !scanning
-    ) {
-
-      scanning =
-        false;
-
-      return;
-
-    }
-
+  if (
+    scanner &&
+    scanning
+  ) {
 
     scanner
       .stop()
@@ -540,23 +684,6 @@
           scanning =
             false;
 
-          startButton.disabled =
-            false;
-
-          startButton.innerText =
-            "📷 START CAMERA";
-
-          startButton.classList.remove(
-            "stop"
-          );
-
-          startButton.onclick =
-            startScanner;
-
-          setStatus(
-            "CAMERA STOPPED"
-          );
-
         }
 
       )
@@ -565,26 +692,13 @@
 
         function(error) {
 
-          console.error(
+          console.log(
             error
           );
 
           scanning =
             false;
 
-          startButton.disabled =
-            false;
-
-          startButton.innerText =
-            "📷 START CAMERA";
-
-          startButton.classList.remove(
-            "stop"
-          );
-
-          startButton.onclick =
-            startScanner;
-
         }
 
       );
@@ -592,682 +706,153 @@
   }
 
 
-  // ==================================================
-  // SCAN SUCCESS
-  // ==================================================
+  // ================================================
+  // SEND
+  // ================================================
 
-  function onScanSuccess(
-    decodedText,
-    decodedResult
-  ) {
-
-    if (processing) {
-      return;
-    }
-
-    processing =
-      true;
-
-
-    const orderId =
-      String(
-        decodedText || ""
-      ).trim();
-
-
-    if (!orderId) {
-
-      processing =
-        false;
-
-      return;
-
-    }
-
-
-    console.log(
-      "SCANNED ORDER:",
-      orderId
-    );
-
-
-    resultElement.innerHTML =
-
-      "<div class='order'>" +
-
-      escapeHtml(
-        orderId
-      ) +
-
-      "</div>";
-
-
-    setStatus(
-      "⏳ PROCESSING ORDER...",
-      "processing"
-    );
-
-
-    if (
-      scanner &&
-      scanning
-    ) {
-
-      scanner
-        .stop()
-
-        .then(
-
-          function() {
-
-            scanning =
-              false;
-
-          }
-
-        )
-
-        .catch(
-
-          function(error) {
-
-            console.log(
-              error
-            );
-
-            scanning =
-              false;
-
-          }
-
-        );
-
-    }
-
-
-    sendToBackend(
-      orderId
-    );
-
-  }
-
-
-  // ==================================================
-  // SEND ORDER TO BACKEND
-  // ==================================================
-
-  function sendToBackend(
+  sendToBackend(
     orderId
-  ) {
+  );
 
-    // ================================================
-    // UNIQUE CALLBACK
-    // ================================================
+}
 
-    currentScanToken =
-      "CYFORM_" +
-      Date.now() +
-      "_" +
-      Math.random()
-        .toString(36)
-        .substring(2, 12);
 
-    const callbackName =
-      "cyformScan_" +
-      Date.now() +
-      "_" +
-      Math.random()
-        .toString(36)
-        .substring(2, 8);
+// ==================================================
+// SEND TO APPS SCRIPT
+//
+// IMPORTANT:
+// NO FETCH
+// NO WINDOW.OPEN
+// NO POPUP
+// NO CORS
+//
+// Uses JSONP
+// ==================================================
 
-    const url =
-      BACKEND_URL +
-      "?action=scan" +
-      "&orderId=" +
-      encodeURIComponent(orderId) +
-      "&callback=" +
-      encodeURIComponent(callbackName) +
-      "&t=" +
-      Date.now();
+function sendToBackend(
+  orderId
+) {
 
-    console.log(
-      "SCAN JSONP URL:",
-      url
-    );
 
-    setStatus(
-      "⏳ UPDATING DATABASE...",
-      "processing"
-    );
+  // ================================================
+  // CLEAN PREVIOUS
+  // ================================================
 
-    let finished = false;
+  cleanupBackendRequest();
 
-    const script =
-      document.createElement("script");
 
-    // ================================================
-    // CALLBACK FROM GOOGLE APPS SCRIPT
-    // ================================================
+  // ================================================
+  // UNIQUE CALLBACK
+  // ================================================
 
-    window[callbackName] =
-      function(result) {
+  const callbackName =
+    "cyformScan_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substring(2, 10);
 
-        if (finished) {
-          return;
-        }
 
-        finished = true;
+  currentCallbackName =
+    callbackName;
 
-        try {
-          delete window[callbackName];
-        } catch (e) {
-          window[callbackName] = undefined;
-        }
 
-        try {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-        } catch (e) {}
+  // ================================================
+  // BACKEND URL
+  // ================================================
 
-        clearTimeout(
-          resultPollTimer
-        );
+  const url =
+    BACKEND_URL +
 
-        resultPollTimer =
-          null;
+    "?action=scan" +
 
-        handleBackendResult(
-          result,
-          null
-        );
+    "&orderId=" +
 
-      };
+    encodeURIComponent(
+      orderId
+    ) +
 
-    // ================================================
-    // LOAD APPS SCRIPT AS JSONP
-    //
-    // NO POPUP
-    // NO NEW TAB
-    // NO CORS FETCH
-    // PROCESS SCAN ONLY ONCE
-    // ================================================
+    "&callback=" +
 
-    script.src =
-      url;
+    encodeURIComponent(
+      callbackName
+    ) +
 
-    script.async =
-      true;
+    "&t=" +
 
-    script.onerror =
-      function() {
+    Date.now();
 
-        if (finished) {
-          return;
-        }
 
-        finished = true;
+  console.log(
+    "JSONP REQUEST:",
+    url
+  );
 
-        try {
-          delete window[callbackName];
-        } catch (e) {}
 
-        try {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-        } catch (e) {}
+  // ================================================
+  // CREATE CALLBACK
+  // ================================================
 
-        setStatus(
-          "❌ CONNECTION ERROR",
-          "error"
-        );
-
-        resultElement.innerHTML =
-          "<div class='result-card'>" +
-          "<div class='result-title' " +
-          "style='color:#990000'>" +
-          "❌ BACKEND ERROR" +
-          "</div>" +
-          "<div class='details'>" +
-          "<div class='detail-row'>" +
-          "<span class='detail-label'>" +
-          "MESSAGE: " +
-          "</span>" +
-          "<span class='detail-value'>" +
-          "Tidak dapat menerima response daripada Google Apps Script." +
-          "</span>" +
-          "</div>" +
-          "</div>" +
-          "</div>";
-
-        processing =
-          false;
-
-        nextButton.classList.remove(
-          "hidden"
-        );
-
-      };
-
-    document.body.appendChild(
-      script
-    );
-
-    // ================================================
-    // SAFETY TIMEOUT
-    // ================================================
-
-    setTimeout(
-      function() {
-
-        if (finished) {
-          return;
-        }
-
-        finished = true;
-
-        try {
-          delete window[callbackName];
-        } catch (e) {}
-
-        try {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-        } catch (e) {}
-
-        setStatus(
-          "❌ BACKEND TIMEOUT",
-          "error"
-        );
-
-        resultElement.innerHTML =
-          "<div class='result-card'>" +
-          "<div class='result-title' " +
-          "style='color:#990000'>" +
-          "❌ TIMEOUT" +
-          "</div>" +
-          "<div class='details'>" +
-          "<div class='detail-row'>" +
-          "<span class='detail-label'>" +
-          "MESSAGE: " +
-          "</span>" +
-          "<span class='detail-value'>" +
-          "Google Apps Script tidak memberi response dalam masa 15 saat." +
-          "</span>" +
-          "</div>" +
-          "</div>" +
-          "</div>";
-
-        processing =
-          false;
-
-        nextButton.classList.remove(
-          "hidden"
-        );
-
-      },
-      15000
-    );
-
-  }
-
-
-  // ==================================================
-  // RESULT POLLING
-  //
-  // IMPORTANT:
-  // Tidak panggil action=scan lagi.
-  //
-  // Hanya:
-  // action=result
-  //
-  // Jadi STATUS TAKKAN LOMPAT 2 KALI.
-  // ==================================================
-
-  function startResultPolling(
-    token,
-    backendWindow
-  ) {
-
-    if (
-      resultPollTimer
-    ) {
-
-      clearTimeout(
-        resultPollTimer
-      );
-
-    }
-
-
-    pollScanResult(
-      token,
-      backendWindow
-    );
-
-  }
-
-
-  // ==================================================
-  // JSONP RESULT
-  // ==================================================
-
-  function pollScanResult(
-    token,
-    backendWindow
-  ) {
-
-    const callbackName =
-      "cyformResult_" +
-      Date.now() +
-      "_" +
-      Math.random()
-        .toString(36)
-        .substring(2, 8);
-
-
-    let finished =
-      false;
-
-
-    const script =
-      document.createElement(
-        "script"
-      );
-
-
-    window[callbackName] =
-      function(result) {
-
-        if (finished) {
-          return;
-        }
-
-        finished =
-          true;
-
-
-        // Remove callback
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        } catch(e) {
-
-          window[
-            callbackName
-          ] = undefined;
-
-        }
-
-
-        // Remove script
-
-        try {
-
-          if (
-            script.parentNode
-          ) {
-
-            script.parentNode.removeChild(
-              script
-            );
-
-          }
-
-        } catch(e) {}
-
-
-        // ==========================================
-        // RESULT NOT READY
-        // ==========================================
-
-        if (
-          !result ||
-          result.pending === true
-        ) {
-
-          scheduleNextPoll(
-            token,
-            backendWindow
-          );
-
-          return;
-
-        }
-
-
-        // ==========================================
-        // RESULT READY
-        // ==========================================
-
-        handleBackendResult(
-          result,
-          backendWindow
-        );
-
-      };
-
-
-    script.src =
-
-      BACKEND_URL +
-
-      "?action=result" +
-
-      "&token=" +
-
-      encodeURIComponent(
-        token
-      ) +
-
-      "&callback=" +
-
-      encodeURIComponent(
-        callbackName
-      ) +
-
-      "&t=" +
-
-      Date.now();
-
-
-    script.async =
-      true;
-
-
-    script.onerror =
-      function() {
-
-        if (finished) {
-          return;
-        }
-
-        finished =
-          true;
-
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        } catch(e) {}
-
-
-        try {
-
-          if (
-            script.parentNode
-          ) {
-
-            script.parentNode.removeChild(
-              script
-            );
-
-          }
-
-        } catch(e) {}
-
-
-        scheduleNextPoll(
-          token,
-          backendWindow
-        );
-
-      };
-
-
-    document.body.appendChild(
-      script
-    );
-
-
-    // Safety timeout
-
-    setTimeout(
-
-      function() {
-
-        if (finished) {
-          return;
-        }
-
-        finished =
-          true;
-
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        } catch(e) {}
-
-
-        try {
-
-          if (
-            script.parentNode
-          ) {
-
-            script.parentNode.removeChild(
-              script
-            );
-
-          }
-
-        } catch(e) {}
-
-
-        scheduleNextPoll(
-          token,
-          backendWindow
-        );
-
-      },
-
-      1500
-
-    );
-
-  }
-
-
-  // ==================================================
-  // NEXT POLL
-  // ==================================================
-
-  function scheduleNextPoll(
-    token,
-    backendWindow
-  ) {
-
-    resultPollTimer =
-      setTimeout(
-
-        function() {
-
-          pollScanResult(
-            token,
-            backendWindow
-          );
-
-        },
-
-        700
-
-      );
-
-  }
-
-
-  // ==================================================
-  // HANDLE REAL BACKEND RESULT
-  // ==================================================
-
-  function handleBackendResult(
-    result,
-    backendWindow
-  ) {
-
-    // ================================================
-    // CLOSE BACKEND TAB
-    // ================================================
-
-    try {
-
-      if (
-        backendWindow &&
-        !backendWindow.closed
-      ) {
-
-        backendWindow.close();
-
-      }
-
-    }
-
-    catch(error) {
+  window[callbackName] =
+    function(result) {
 
       console.log(
-        "Cannot close backend:",
+        "BACKEND RESULT:",
+        result
+      );
+
+
+      cleanupBackendRequest();
+
+
+      handleBackendResult(
+        result
+      );
+
+    };
+
+
+  // ================================================
+  // CREATE SCRIPT
+  // ================================================
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  currentCallbackScript =
+    script;
+
+
+  script.src =
+    url;
+
+
+  script.async =
+    true;
+
+
+  // ================================================
+  // ERROR
+  // ================================================
+
+  script.onerror =
+    function(error) {
+
+      console.error(
+        "JSONP ERROR:",
         error
       );
 
-    }
 
+      cleanupBackendRequest();
 
-    // ================================================
-    // CLEAR
-    // ================================================
-
-    currentScanToken =
-      null;
-
-
-    resultPollTimer =
-      null;
-
-
-    // ================================================
-    // CHECK RESULT
-    // ================================================
-
-    if (
-      !result ||
-      !result.success
-    ) {
 
       setStatus(
-        "❌ SCAN FAILED",
+        "❌ CONNECTION ERROR",
         "error"
       );
 
@@ -1276,11 +861,10 @@
 
         "<div class='result-card'>" +
 
-        "<div " +
-        "class='result-title' " +
+        "<div class='result-title' " +
         "style='color:#990000'>" +
 
-        "❌ SCAN ERROR" +
+        "❌ BACKEND ERROR" +
 
         "</div>" +
 
@@ -1289,23 +873,12 @@
         "<div class='detail-row'>" +
 
         "<span class='detail-label'>" +
-
         "MESSAGE: " +
-
         "</span>" +
 
         "<span class='detail-value'>" +
 
-        escapeHtml(
-
-          result &&
-          result.message
-
-            ? result.message
-
-            : "Unknown error"
-
-        ) +
+        "Tidak dapat menerima response daripada Google Apps Script." +
 
         "</span>" +
 
@@ -1324,199 +897,221 @@
         "hidden"
       );
 
+    };
 
-      return;
+
+  // ================================================
+  // ADD SCRIPT
+  // ================================================
+
+  document.body.appendChild(
+    script
+  );
+
+
+  // ================================================
+  // TIMEOUT
+  // ================================================
+
+  currentTimeout =
+    setTimeout(
+
+      function() {
+
+        console.error(
+          "BACKEND TIMEOUT"
+        );
+
+
+        cleanupBackendRequest();
+
+
+        setStatus(
+          "❌ BACKEND TIMEOUT",
+          "error"
+        );
+
+
+        resultElement.innerHTML =
+
+          "<div class='result-card'>" +
+
+          "<div class='result-title' " +
+          "style='color:#990000'>" +
+
+          "❌ TIMEOUT" +
+
+          "</div>" +
+
+          "<div class='details'>" +
+
+          "<div class='detail-row'>" +
+
+          "<span class='detail-label'>" +
+          "MESSAGE: " +
+          "</span>" +
+
+          "<span class='detail-value'>" +
+
+          "Google Apps Script tidak memberi response dalam masa 20 saat." +
+
+          "</span>" +
+
+          "</div>" +
+
+          "</div>" +
+
+          "</div>";
+
+
+        processing =
+          false;
+
+
+        nextButton.classList.remove(
+          "hidden"
+        );
+
+      },
+
+      20000
+
+    );
+
+}
+
+
+// ==================================================
+// CLEANUP JSONP
+// ==================================================
+
+function cleanupBackendRequest() {
+
+  if (
+    currentTimeout
+  ) {
+
+    clearTimeout(
+      currentTimeout
+    );
+
+    currentTimeout =
+      null;
+
+  }
+
+
+  if (
+    currentCallbackName
+  ) {
+
+    try {
+
+      delete window[
+        currentCallbackName
+      ];
 
     }
 
+    catch(error) {
 
-    // ================================================
-    // REAL DATA
-    // ================================================
+      window[
+        currentCallbackName
+      ] = undefined;
 
-    const orderId =
-      result.orderId ||
-      "-";
+    }
 
+    currentCallbackName =
+      null;
 
-    const fromStatus =
-      result.fromStatus ||
-      "-";
-
-
-    const toStatus =
-      result.toStatus ||
-      "-";
+  }
 
 
-    const name =
-      result.name ||
-      "-";
+  if (
+    currentCallbackScript
+  ) {
+
+    try {
+
+      if (
+        currentCallbackScript.parentNode
+      ) {
+
+        currentCallbackScript
+          .parentNode
+          .removeChild(
+            currentCallbackScript
+          );
+
+      }
+
+    }
+
+    catch(error) {}
 
 
-    const sku =
-      result.sku ||
-      "-";
+    currentCallbackScript =
+      null;
+
+  }
+
+}
 
 
-    const model =
-      result.model ||
-      "-";
+// ==================================================
+// HANDLE BACKEND RESULT
+// ==================================================
+
+function handleBackendResult(
+  result
+) {
 
 
-    const source =
-      result.source ||
-      "-";
+  // ================================================
+  // FAILED
+  // ================================================
 
-
-    // ================================================
-    // SUCCESS
-    // ================================================
+  if (
+    !result ||
+    !result.success
+  ) {
 
     setStatus(
-      "✅ SCAN BERJAYA",
-      "success"
+      "❌ SCAN FAILED",
+      "error"
     );
 
-
-    // ================================================
-    // SHOW REAL STATUS
-    // ================================================
 
     resultElement.innerHTML =
 
       "<div class='result-card'>" +
 
-      "<div class='result-title'>" +
+      "<div class='result-title' " +
+      "style='color:#990000'>" +
 
-      "✅ STATUS BERJAYA DIUPDATE" +
-
-      "</div>" +
-
-
-      // ORDER ID
-
-      "<div class='order'>" +
-
-      escapeHtml(
-        orderId
-      ) +
+      "❌ SCAN ERROR" +
 
       "</div>" +
-
-
-      // STATUS
-
-      "<div class='status-flow-box'>" +
-
-      "<div class='status-label'>" +
-
-      "STATUS BERUBAH" +
-
-      "</div>" +
-
-      "<div class='status-flow'>" +
-
-      "<span class='from-status'>" +
-
-      escapeHtml(
-        fromStatus
-      ) +
-
-      "</span>" +
-
-      "<span class='arrow'>" +
-
-      "→" +
-
-      "</span>" +
-
-      "<span class='to-status'>" +
-
-      escapeHtml(
-        toStatus
-      ) +
-
-      "</span>" +
-
-      "</div>" +
-
-      "</div>" +
-
-
-      // DETAILS
 
       "<div class='details'>" +
 
       "<div class='detail-row'>" +
 
       "<span class='detail-label'>" +
-
-      "NAME: " +
-
+      "MESSAGE: " +
       "</span>" +
 
       "<span class='detail-value'>" +
 
       escapeHtml(
-        name
-      ) +
 
-      "</span>" +
+        result &&
+        result.message
 
-      "</div>" +
+          ? result.message
 
+          : "Unknown error"
 
-      "<div class='detail-row'>" +
-
-      "<span class='detail-label'>" +
-
-      "SKU: " +
-
-      "</span>" +
-
-      "<span class='detail-value'>" +
-
-      escapeHtml(
-        sku
-      ) +
-
-      "</span>" +
-
-      "</div>" +
-
-
-      "<div class='detail-row'>" +
-
-      "<span class='detail-label'>" +
-
-      "MODEL: " +
-
-      "</span>" +
-
-      "<span class='detail-value'>" +
-
-      escapeHtml(
-        model
-      ) +
-
-      "</span>" +
-
-      "</div>" +
-
-
-      "<div class='detail-row'>" +
-
-      "<span class='detail-label'>" +
-
-      "SOURCE: " +
-
-      "</span>" +
-
-      "<span class='detail-value'>" +
-
-      escapeHtml(
-        source
       ) +
 
       "</span>" +
@@ -1528,137 +1123,359 @@
       "</div>";
 
 
-    // ================================================
-    // NEXT SCAN
-    // ================================================
+    processing =
+      false;
+
 
     nextButton.classList.remove(
       "hidden"
     );
 
 
-    startButton.classList.add(
-      "hidden"
-    );
-
-
-    processing =
-      false;
+    return;
 
   }
 
 
-  // ==================================================
-  // SCAN FAILURE
-  // ==================================================
+  // ================================================
+  // REAL DATA
+  // ================================================
 
-  function onScanFailure(
-    errorMessage
-  ) {
-
-    // Jangan buat apa-apa.
-    // html5-qrcode akan panggil function
-    // ini berkali-kali ketika mencari barcode.
-
-  }
+  const orderId =
+    result.orderId ||
+    "-";
 
 
-  // ==================================================
+  const fromStatus =
+    result.fromStatus ||
+    "-";
+
+
+  const toStatus =
+    result.toStatus ||
+    "-";
+
+
+  const name =
+    result.name ||
+    "-";
+
+
+  const sku =
+    result.sku ||
+    "-";
+
+
+  const model =
+    result.model ||
+    "-";
+
+
+  const source =
+    result.source ||
+    "-";
+
+
+  // ================================================
+  // SUCCESS
+  // ================================================
+
+  setStatus(
+    "✅ SCAN BERJAYA",
+    "success"
+  );
+
+
+  resultElement.innerHTML =
+
+    "<div class='result-card'>" +
+
+
+    "<div class='result-title'>" +
+
+    "✅ STATUS BERJAYA DIUPDATE" +
+
+    "</div>" +
+
+
+    // ============================================
+    // ORDER ID
+    // ============================================
+
+    "<div class='order'>" +
+
+    escapeHtml(
+      orderId
+    ) +
+
+    "</div>" +
+
+
+    // ============================================
+    // STATUS FLOW
+    // ============================================
+
+    "<div class='status-flow-box'>" +
+
+    "<div class='status-label'>" +
+
+    "STATUS BERUBAH" +
+
+    "</div>" +
+
+
+    "<div class='status-flow'>" +
+
+
+    "<span class='from-status'>" +
+
+    escapeHtml(
+      fromStatus
+    ) +
+
+    "</span>" +
+
+
+    "<span class='arrow'>" +
+
+    "→" +
+
+    "</span>" +
+
+
+    "<span class='to-status'>" +
+
+    escapeHtml(
+      toStatus
+    ) +
+
+    "</span>" +
+
+
+    "</div>" +
+
+
+    "</div>" +
+
+
+    // ============================================
+    // DETAILS
+    // ============================================
+
+    "<div class='details'>" +
+
+
+    "<div class='detail-row'>" +
+
+    "<span class='detail-label'>" +
+
+    "NAME: " +
+
+    "</span>" +
+
+    "<span class='detail-value'>" +
+
+    escapeHtml(
+      name
+    ) +
+
+    "</span>" +
+
+    "</div>" +
+
+
+    "<div class='detail-row'>" +
+
+    "<span class='detail-label'>" +
+
+    "SKU: " +
+
+    "</span>" +
+
+    "<span class='detail-value'>" +
+
+    escapeHtml(
+      sku
+    ) +
+
+    "</span>" +
+
+    "</div>" +
+
+
+    "<div class='detail-row'>" +
+
+    "<span class='detail-label'>" +
+
+    "MODEL: " +
+
+    "</span>" +
+
+    "<span class='detail-value'>" +
+
+    escapeHtml(
+      model
+    ) +
+
+    "</span>" +
+
+    "</div>" +
+
+
+    "<div class='detail-row'>" +
+
+    "<span class='detail-label'>" +
+
+    "SOURCE: " +
+
+    "</span>" +
+
+    "<span class='detail-value'>" +
+
+    escapeHtml(
+      source
+    ) +
+
+    "</span>" +
+
+    "</div>" +
+
+
+    "</div>" +
+
+
+    "</div>";
+
+
+  // ================================================
   // NEXT SCAN
-  // ==================================================
+  // ================================================
 
-  function startNextScan() {
-
-    if (
-      resultPollTimer
-    ) {
-
-      clearTimeout(
-        resultPollTimer
-      );
-
-      resultPollTimer =
-        null;
-
-    }
+  nextButton.classList.remove(
+    "hidden"
+  );
 
 
-    processing =
-      false;
-
-    resultElement.innerHTML =
-      "";
-
-    nextButton.classList.add(
-      "hidden"
-    );
-
-    startButton.classList.remove(
-      "hidden"
-    );
-
-    startButton.disabled =
-      false;
-
-    startButton.innerText =
-      "📷 START CAMERA";
-
-    startButton.classList.remove(
-      "stop"
-    );
-
-    startButton.onclick =
-      startScanner;
-
-    scanner =
-      null;
-
-    setStatus(
-      "READY TO SCAN"
-    );
-
-  }
+  startButton.classList.add(
+    "hidden"
+  );
 
 
-  // ==================================================
-  // ESCAPE HTML
-  // ==================================================
+  processing =
+    false;
 
-  function escapeHtml(
-    text
-  ) {
+}
 
-    return String(
-      text || ""
-    )
 
-      .replace(
-        /&/g,
-        "&amp;"
-      )
+// ==================================================
+// SCAN FAILURE
+// ==================================================
 
-      .replace(
-        /</g,
-        "&lt;"
-      )
+function onScanFailure(
+  errorMessage
+) {
 
-      .replace(
-        />/g,
-        "&gt;"
-      )
+  // Jangan buat apa-apa.
+  // html5-qrcode akan panggil function
+  // ini berkali-kali ketika mencari barcode.
 
-      .replace(
-        /"/g,
-        "&quot;"
-      )
+}
 
-      .replace(
-        /'/g,
-        "&#039;"
-      );
 
-  }
+// ==================================================
+// NEXT SCAN
+// ==================================================
 
+function startNextScan() {
+
+
+  cleanupBackendRequest();
+
+
+  processing =
+    false;
+
+
+  resultElement.innerHTML =
+    "";
+
+
+  nextButton.classList.add(
+    "hidden"
+  );
+
+
+  startButton.classList.remove(
+    "hidden"
+  );
+
+
+  startButton.disabled =
+    false;
+
+
+  startButton.innerText =
+    "📷 START CAMERA";
+
+
+  startButton.classList.remove(
+    "stop"
+  );
+
+
+  startButton.onclick =
+    startScanner;
+
+
+  scanner =
+    null;
+
+
+  setStatus(
+    "READY TO SCAN"
+  );
+
+}
+
+
+// ==================================================
+// ESCAPE HTML
+// ==================================================
+
+function escapeHtml(
+  text
+) {
+
+  return String(
+    text || ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
 
 </script>
 
