@@ -12,13 +12,10 @@
 
   <title>CYFORM PHONE SCANNER</title>
 
-
-  <!-- BARCODE SCANNER -->
   <script
     src="https://unpkg.com/html5-qrcode"
     type="text/javascript">
   </script>
-
 
   <style>
 
@@ -26,18 +23,12 @@
       box-sizing: border-box;
     }
 
-
     body {
       margin: 0;
       background: #ffffff;
       font-family: Arial, sans-serif;
       text-align: center;
     }
-
-
-    /* ==========================================
-       HEADER
-    ========================================== */
 
     .header {
       background: #f58220;
@@ -47,11 +38,6 @@
       font-weight: bold;
     }
 
-
-    /* ==========================================
-       CONTAINER
-    ========================================== */
-
     .container {
       width: 100%;
       max-width: 500px;
@@ -59,26 +45,15 @@
       padding: 20px;
     }
 
-
-    /* ==========================================
-       CAMERA
-    ========================================== */
-
     #reader {
       width: 100%;
       margin-top: 20px;
     }
 
-
     #reader video {
       width: 100% !important;
       border-radius: 12px;
     }
-
-
-    /* ==========================================
-       STATUS
-    ========================================== */
 
     .status {
       margin-top: 20px;
@@ -89,28 +64,20 @@
       font-weight: bold;
     }
 
-
     .success {
       background: #d9ead3;
       color: #166534;
     }
-
 
     .error {
       background: #f4cccc;
       color: #990000;
     }
 
-
     .processing {
       background: #fff2cc;
       color: #7f6000;
     }
-
-
-    /* ==========================================
-       ORDER
-    ========================================== */
 
     .order {
       font-size: 28px;
@@ -118,11 +85,6 @@
       margin-top: 15px;
       word-break: break-all;
     }
-
-
-    /* ==========================================
-       STATUS FLOW
-    ========================================== */
 
     .status-flow-box {
       margin-top: 20px;
@@ -132,14 +94,12 @@
       border: 2px solid #eeeeee;
     }
 
-
     .status-label {
       font-size: 14px;
       color: #777777;
       font-weight: bold;
       margin-bottom: 10px;
     }
-
 
     .status-flow {
       font-size: 25px;
@@ -148,26 +108,18 @@
       word-break: break-word;
     }
 
-
     .from-status {
       color: #555555;
     }
-
 
     .arrow {
       color: #f58220;
       padding: 0 8px;
     }
 
-
     .to-status {
       color: #166534;
     }
-
-
-    /* ==========================================
-       INFO
-    ========================================== */
 
     .info-box {
       margin-top: 15px;
@@ -178,35 +130,26 @@
       text-align: left;
     }
 
-
     .info-row {
       padding: 7px 0;
       border-bottom: 1px solid #eeeeee;
       font-size: 16px;
     }
 
-
     .info-row:last-child {
       border-bottom: none;
     }
-
 
     .info-label {
       color: #777777;
       font-weight: normal;
     }
 
-
     .info-value {
       font-weight: bold;
       color: #222222;
       word-break: break-word;
     }
-
-
-    /* ==========================================
-       BUTTON
-    ========================================== */
 
     button {
       margin-top: 20px;
@@ -221,35 +164,25 @@
       cursor: pointer;
     }
 
-
     button:active {
       transform: scale(0.98);
     }
-
 
     button.stop {
       background: #555555;
     }
 
-
     button.next {
       background: #111111;
     }
-
 
     button:disabled {
       opacity: 0.6;
     }
 
-
-    /* ==========================================
-       RESULT
-    ========================================== */
-
     #result {
       margin-top: 15px;
     }
-
 
     .small {
       margin-top: 10px;
@@ -257,15 +190,9 @@
       font-size: 14px;
     }
 
-
     .hidden {
       display: none !important;
     }
-
-
-    /* ==========================================
-       RESULT CARD
-    ========================================== */
 
     .result-card {
       margin-top: 20px;
@@ -276,14 +203,12 @@
       text-align: center;
     }
 
-
     .result-title {
       font-size: 22px;
       font-weight: bold;
       color: #166534;
       margin-bottom: 15px;
     }
-
 
     .details {
       margin-top: 20px;
@@ -294,30 +219,25 @@
       padding: 15px;
     }
 
-
     .detail-row {
       padding: 8px 0;
       border-bottom: 1px solid #eeeeee;
       font-size: 15px;
     }
 
-
     .detail-row:last-child {
       border-bottom: none;
     }
 
-
     .detail-label {
       color: #777777;
     }
-
 
     .detail-value {
       font-weight: bold;
       color: #222222;
       word-break: break-word;
     }
-
 
   </style>
 
@@ -326,11 +246,6 @@
 
 <body>
 
-
-  <!-- ==========================================
-       HEADER
-  ========================================== -->
-
   <div class="header">
     CYFORM PHONE SCANNER
   </div>
@@ -338,17 +253,7 @@
 
   <div class="container">
 
-
-    <!-- ========================================
-         CAMERA
-    ======================================== -->
-
     <div id="reader"></div>
-
-
-    <!-- ========================================
-         STATUS
-    ======================================== -->
 
     <div
       id="status"
@@ -357,17 +262,7 @@
       READY TO SCAN
     </div>
 
-
-    <!-- ========================================
-         RESULT
-    ======================================== -->
-
     <div id="result"></div>
-
-
-    <!-- ========================================
-         START CAMERA
-    ======================================== -->
 
     <button
       id="startButton"
@@ -375,11 +270,6 @@
     >
       📷 START CAMERA
     </button>
-
-
-    <!-- ========================================
-         NEXT SCAN
-    ======================================== -->
 
     <button
       id="nextButton"
@@ -389,11 +279,9 @@
       🔄 SCAN ORDER SETERUSNYA
     </button>
 
-
     <div class="small">
       Scan barcode ORDER ID
     </div>
-
 
   </div>
 
@@ -419,7 +307,9 @@
 
   let processing = false;
 
-  let backendWindow = null;
+  let resultPollTimer = null;
+
+  let currentScanToken = null;
 
 
   // ==================================================
@@ -429,14 +319,11 @@
   const statusElement =
     document.getElementById("status");
 
-
   const resultElement =
     document.getElementById("result");
 
-
   const startButton =
     document.getElementById("startButton");
-
 
   const nextButton =
     document.getElementById("nextButton");
@@ -454,7 +341,6 @@
     statusElement.className =
       "status " + type;
 
-
     statusElement.innerHTML =
       message;
 
@@ -467,52 +353,37 @@
 
   function startScanner() {
 
-
     if (scanning) {
       return;
     }
-
 
     if (processing) {
       return;
     }
 
+    processing = false;
 
-    processing =
-      false;
-
-
-    resultElement.innerHTML =
-      "";
-
+    resultElement.innerHTML = "";
 
     nextButton.classList.add(
       "hidden"
     );
 
-
     startButton.disabled =
       true;
-
 
     startButton.innerText =
       "⏳ CAMERA STARTING...";
 
-
     startButton.classList.remove(
       "stop"
     );
-
 
     setStatus(
       "📷 CAMERA STARTING...",
       "processing"
     );
 
-
-    // ================================================
-    // CREATE SCANNER
-    // ================================================
 
     scanner =
       new Html5Qrcode(
@@ -529,7 +400,6 @@
       {
 
         fps: 10,
-
 
         qrbox:
           function(
@@ -553,7 +423,6 @@
 
           },
 
-
         aspectRatio:
           1.7777778
 
@@ -565,7 +434,6 @@
 
     )
 
-
     .then(
 
       function() {
@@ -573,23 +441,18 @@
         scanning =
           true;
 
-
         startButton.disabled =
           false;
 
-
         startButton.innerText =
           "⏹ STOP CAMERA";
-
 
         startButton.classList.add(
           "stop"
         );
 
-
         startButton.onclick =
           stopScanner;
-
 
         setStatus(
           "📷 CAMERA READY<br>Scan barcode ORDER ID"
@@ -599,7 +462,6 @@
 
     )
 
-
     .catch(
 
       function(error) {
@@ -608,37 +470,29 @@
           error
         );
 
-
         scanning =
           false;
-
 
         processing =
           false;
 
-
         startButton.disabled =
           false;
 
-
         startButton.innerText =
           "📷 START CAMERA";
-
 
         startButton.classList.remove(
           "stop"
         );
 
-
         startButton.onclick =
           startScanner;
-
 
         setStatus(
           "❌ CAMERA ERROR",
           "error"
         );
-
 
         resultElement.innerHTML =
 
@@ -663,7 +517,6 @@
 
   function stopScanner() {
 
-
     if (
       !scanner ||
       !scanning
@@ -687,23 +540,18 @@
           scanning =
             false;
 
-
           startButton.disabled =
             false;
 
-
           startButton.innerText =
             "📷 START CAMERA";
-
 
           startButton.classList.remove(
             "stop"
           );
 
-
           startButton.onclick =
             startScanner;
-
 
           setStatus(
             "CAMERA STOPPED"
@@ -721,23 +569,18 @@
             error
           );
 
-
           scanning =
             false;
-
 
           startButton.disabled =
             false;
 
-
           startButton.innerText =
             "📷 START CAMERA";
-
 
           startButton.classList.remove(
             "stop"
           );
-
 
           startButton.onclick =
             startScanner;
@@ -758,23 +601,13 @@
     decodedResult
   ) {
 
-
-    // ================================================
-    // PREVENT DUPLICATE SCAN
-    // ================================================
-
     if (processing) {
       return;
     }
 
-
     processing =
       true;
 
-
-    // ================================================
-    // GET ORDER ID
-    // ================================================
 
     const orderId =
       String(
@@ -798,10 +631,6 @@
     );
 
 
-    // ================================================
-    // SHOW ORDER ID
-    // ================================================
-
     resultElement.innerHTML =
 
       "<div class='order'>" +
@@ -818,10 +647,6 @@
       "processing"
     );
 
-
-    // ================================================
-    // STOP CAMERA
-    // ================================================
 
     if (
       scanner &&
@@ -860,10 +685,6 @@
     }
 
 
-    // ================================================
-    // SEND TO BACKEND
-    // ================================================
-
     sendToBackend(
       orderId
     );
@@ -879,20 +700,40 @@
     orderId
   ) {
 
+    // ================================================
+    // UNIQUE TOKEN
+    // ================================================
+
+    currentScanToken =
+      "CYFORM_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .substring(2, 12);
+
 
     const url =
 
       BACKEND_URL +
 
-      "?action=scan&orderId=" +
+      "?action=scan" +
+
+      "&orderId=" +
 
       encodeURIComponent(
         orderId
+      ) +
+
+      "&token=" +
+
+      encodeURIComponent(
+        currentScanToken
       );
 
 
     console.log(
-      "BACKEND URL:",
+      "SCAN URL:",
       url
     );
 
@@ -903,24 +744,13 @@
     );
 
 
-    /*
-     * IMPORTANT
-     *
-     * Backend hanya dipanggil SEKALI.
-     *
-     * Jangan buat fetch kedua.
-     *
-     * Apps Script akan:
-     *
-     * 1. processScan()
-     * 2. update database
-     * 3. return fromStatus
-     * 4. return toStatus
-     * 5. postMessage() ke page ini
-     */
+    // ================================================
+    // OPEN BACKEND
+    //
+    // BACKEND PROCESS SEKALI SAHAJA
+    // ================================================
 
-
-    backendWindow =
+    const backendWindow =
       window.open(
         url,
         "_blank"
@@ -938,7 +768,6 @@
         "error"
       );
 
-
       resultElement.innerHTML =
 
         "<div class='small'>" +
@@ -949,10 +778,8 @@
 
         "</div>";
 
-
       processing =
         false;
-
 
       return;
 
@@ -963,390 +790,651 @@
       "BACKEND WINDOW OPENED"
     );
 
+
+    // ================================================
+    // START JSONP POLLING
+    // ================================================
+
+    startResultPolling(
+      currentScanToken,
+      backendWindow
+    );
+
   }
 
 
   // ==================================================
-  // RECEIVE RESULT FROM GOOGLE APPS SCRIPT
+  // RESULT POLLING
+  //
+  // IMPORTANT:
+  // Tidak panggil action=scan lagi.
+  //
+  // Hanya:
+  // action=result
+  //
+  // Jadi STATUS TAKKAN LOMPAT 2 KALI.
   // ==================================================
 
-  window.addEventListener(
-    "message",
-    function(event) {
+  function startResultPolling(
+    token,
+    backendWindow
+  ) {
 
-      console.log(
-        "MESSAGE RECEIVED:",
-        event.data
+    if (
+      resultPollTimer
+    ) {
+
+      clearTimeout(
+        resultPollTimer
+      );
+
+    }
+
+
+    pollScanResult(
+      token,
+      backendWindow
+    );
+
+  }
+
+
+  // ==================================================
+  // JSONP RESULT
+  // ==================================================
+
+  function pollScanResult(
+    token,
+    backendWindow
+  ) {
+
+    const callbackName =
+      "cyformResult_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .substring(2, 8);
+
+
+    let finished =
+      false;
+
+
+    const script =
+      document.createElement(
+        "script"
       );
 
 
-      // ==============================================
-      // CHECK MESSAGE TYPE
-      // ==============================================
+    window[callbackName] =
+      function(result) {
 
-      if (
-        !event.data ||
-        event.data.type !==
-        "CYFORM_SCAN_RESULT"
-      ) {
+        if (finished) {
+          return;
+        }
 
-        return;
-
-      }
+        finished =
+          true;
 
 
-      const result =
-        event.data.payload;
+        // Remove callback
 
+        try {
 
-      console.log(
-        "REAL BACKEND RESULT:",
-        result
-      );
+          delete window[
+            callbackName
+          ];
 
+        } catch(e) {
 
-      // ==============================================
-      // CLOSE BACKEND WINDOW
-      // ==============================================
-
-      try {
-
-        if (
-          backendWindow &&
-          !backendWindow.closed
-        ) {
-
-          backendWindow.close();
+          window[
+            callbackName
+          ] = undefined;
 
         }
 
-      }
 
-      catch(error) {
+        // Remove script
 
-        console.log(
-          "Cannot close backend window:",
-          error
+        try {
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode.removeChild(
+              script
+            );
+
+          }
+
+        } catch(e) {}
+
+
+        // ==========================================
+        // RESULT NOT READY
+        // ==========================================
+
+        if (
+          !result ||
+          result.pending === true
+        ) {
+
+          scheduleNextPoll(
+            token,
+            backendWindow
+          );
+
+          return;
+
+        }
+
+
+        // ==========================================
+        // RESULT READY
+        // ==========================================
+
+        handleBackendResult(
+          result,
+          backendWindow
         );
 
-      }
+      };
 
 
-      backendWindow =
-        null;
+    script.src =
+
+      BACKEND_URL +
+
+      "?action=result" +
+
+      "&token=" +
+
+      encodeURIComponent(
+        token
+      ) +
+
+      "&callback=" +
+
+      encodeURIComponent(
+        callbackName
+      ) +
+
+      "&t=" +
+
+      Date.now();
 
 
-      // ==============================================
-      // CHECK RESULT
-      // ==============================================
+    script.async =
+      true;
 
-      if (
-        !result ||
-        !result.success
-      ) {
 
-        setStatus(
-          "❌ SCAN FAILED",
-          "error"
+    script.onerror =
+      function() {
+
+        if (finished) {
+          return;
+        }
+
+        finished =
+          true;
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        } catch(e) {}
+
+
+        try {
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode.removeChild(
+              script
+            );
+
+          }
+
+        } catch(e) {}
+
+
+        scheduleNextPoll(
+          token,
+          backendWindow
         );
 
-
-        resultElement.innerHTML =
-
-          "<div class='result-card'>" +
-
-          "<div " +
-          "class='result-title' " +
-          "style='color:#990000'>" +
-
-          "❌ SCAN ERROR" +
-
-          "</div>" +
+      };
 
 
-          "<div class='details'>" +
-
-          "<div class='detail-row'>" +
-
-          "<span class='detail-label'>" +
-
-          "MESSAGE: " +
-
-          "</span>" +
+    document.body.appendChild(
+      script
+    );
 
 
-          "<span class='detail-value'>" +
+    // Safety timeout
 
-          escapeHtml(
+    setTimeout(
 
-            result &&
-            result.message
+      function() {
 
-              ? result.message
+        if (finished) {
+          return;
+        }
 
-              : "Unknown error"
-
-          ) +
-
-          "</span>" +
-
-          "</div>" +
-
-          "</div>" +
-
-          "</div>";
+        finished =
+          true;
 
 
-        processing =
-          false;
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        } catch(e) {}
 
 
-        nextButton.classList.remove(
-          "hidden"
+        try {
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode.removeChild(
+              script
+            );
+
+          }
+
+        } catch(e) {}
+
+
+        scheduleNextPoll(
+          token,
+          backendWindow
         );
 
+      },
 
-        return;
+      1500
 
-      }
+    );
 
-
-      // ==============================================
-      // GET REAL BACKEND DATA
-      // ==============================================
-
-      const orderId =
-        result.orderId ||
-        "-";
+  }
 
 
-      const fromStatus =
-        result.fromStatus ||
-        "-";
+  // ==================================================
+  // NEXT POLL
+  // ==================================================
 
+  function scheduleNextPoll(
+    token,
+    backendWindow
+  ) {
 
-      const toStatus =
-        result.toStatus ||
-        "-";
+    resultPollTimer =
+      setTimeout(
 
+        function() {
 
-      const name =
-        result.name ||
-        "-";
+          pollScanResult(
+            token,
+            backendWindow
+          );
 
+        },
 
-      const sku =
-        result.sku ||
-        "-";
+        700
 
-
-      const model =
-        result.model ||
-        "-";
-
-
-      const source =
-        result.source ||
-        "-";
-
-
-      // ==============================================
-      // SUCCESS
-      // ==============================================
-
-      setStatus(
-        "✅ SCAN BERJAYA",
-        "success"
       );
 
+  }
 
-      // ==============================================
-      // SHOW REAL STATUS
-      // ==============================================
+
+  // ==================================================
+  // HANDLE REAL BACKEND RESULT
+  // ==================================================
+
+  function handleBackendResult(
+    result,
+    backendWindow
+  ) {
+
+    // ================================================
+    // CLOSE BACKEND TAB
+    // ================================================
+
+    try {
+
+      if (
+        backendWindow &&
+        !backendWindow.closed
+      ) {
+
+        backendWindow.close();
+
+      }
+
+    }
+
+    catch(error) {
+
+      console.log(
+        "Cannot close backend:",
+        error
+      );
+
+    }
+
+
+    // ================================================
+    // CLEAR
+    // ================================================
+
+    currentScanToken =
+      null;
+
+
+    resultPollTimer =
+      null;
+
+
+    // ================================================
+    // CHECK RESULT
+    // ================================================
+
+    if (
+      !result ||
+      !result.success
+    ) {
+
+      setStatus(
+        "❌ SCAN FAILED",
+        "error"
+      );
+
 
       resultElement.innerHTML =
 
         "<div class='result-card'>" +
 
+        "<div " +
+        "class='result-title' " +
+        "style='color:#990000'>" +
 
-        // ==========================================
-        // TITLE
-        // ==========================================
-
-        "<div class='result-title'>" +
-
-        "✅ STATUS BERJAYA DIUPDATE" +
+        "❌ SCAN ERROR" +
 
         "</div>" +
-
-
-        // ==========================================
-        // ORDER ID
-        // ==========================================
-
-        "<div class='order'>" +
-
-        escapeHtml(
-          orderId
-        ) +
-
-        "</div>" +
-
-
-        // ==========================================
-        // STATUS FLOW
-        // ==========================================
-
-        "<div class='status-flow-box'>" +
-
-        "<div class='status-label'>" +
-
-        "STATUS BERUBAH" +
-
-        "</div>" +
-
-
-        "<div class='status-flow'>" +
-
-
-        "<span class='from-status'>" +
-
-        escapeHtml(
-          fromStatus
-        ) +
-
-        "</span>" +
-
-
-        "<span class='arrow'>" +
-
-        "→" +
-
-        "</span>" +
-
-
-        "<span class='to-status'>" +
-
-        escapeHtml(
-          toStatus
-        ) +
-
-        "</span>" +
-
-
-        "</div>" +
-
-        "</div>" +
-
-
-        // ==========================================
-        // DETAILS
-        // ==========================================
 
         "<div class='details'>" +
 
-
         "<div class='detail-row'>" +
 
         "<span class='detail-label'>" +
 
-        "NAME: " +
+        "MESSAGE: " +
 
         "</span>" +
 
         "<span class='detail-value'>" +
 
         escapeHtml(
-          name
+
+          result &&
+          result.message
+
+            ? result.message
+
+            : "Unknown error"
+
         ) +
 
         "</span>" +
 
         "</div>" +
 
-
-        "<div class='detail-row'>" +
-
-        "<span class='detail-label'>" +
-
-        "SKU: " +
-
-        "</span>" +
-
-        "<span class='detail-value'>" +
-
-        escapeHtml(
-          sku
-        ) +
-
-        "</span>" +
-
         "</div>" +
-
-
-        "<div class='detail-row'>" +
-
-        "<span class='detail-label'>" +
-
-        "MODEL: " +
-
-        "</span>" +
-
-        "<span class='detail-value'>" +
-
-        escapeHtml(
-          model
-        ) +
-
-        "</span>" +
-
-        "</div>" +
-
-
-        "<div class='detail-row'>" +
-
-        "<span class='detail-label'>" +
-
-        "SOURCE: " +
-
-        "</span>" +
-
-        "<span class='detail-value'>" +
-
-        escapeHtml(
-          source
-        ) +
-
-        "</span>" +
-
-        "</div>" +
-
-
-        "</div>" +
-
 
         "</div>";
 
 
-      // ==============================================
-      // SHOW NEXT SCAN BUTTON
-      // ==============================================
+      processing =
+        false;
+
 
       nextButton.classList.remove(
         "hidden"
       );
 
 
-      startButton.classList.add(
-        "hidden"
-      );
-
-
-      processing =
-        false;
+      return;
 
     }
-  );
+
+
+    // ================================================
+    // REAL DATA
+    // ================================================
+
+    const orderId =
+      result.orderId ||
+      "-";
+
+
+    const fromStatus =
+      result.fromStatus ||
+      "-";
+
+
+    const toStatus =
+      result.toStatus ||
+      "-";
+
+
+    const name =
+      result.name ||
+      "-";
+
+
+    const sku =
+      result.sku ||
+      "-";
+
+
+    const model =
+      result.model ||
+      "-";
+
+
+    const source =
+      result.source ||
+      "-";
+
+
+    // ================================================
+    // SUCCESS
+    // ================================================
+
+    setStatus(
+      "✅ SCAN BERJAYA",
+      "success"
+    );
+
+
+    // ================================================
+    // SHOW REAL STATUS
+    // ================================================
+
+    resultElement.innerHTML =
+
+      "<div class='result-card'>" +
+
+      "<div class='result-title'>" +
+
+      "✅ STATUS BERJAYA DIUPDATE" +
+
+      "</div>" +
+
+
+      // ORDER ID
+
+      "<div class='order'>" +
+
+      escapeHtml(
+        orderId
+      ) +
+
+      "</div>" +
+
+
+      // STATUS
+
+      "<div class='status-flow-box'>" +
+
+      "<div class='status-label'>" +
+
+      "STATUS BERUBAH" +
+
+      "</div>" +
+
+      "<div class='status-flow'>" +
+
+      "<span class='from-status'>" +
+
+      escapeHtml(
+        fromStatus
+      ) +
+
+      "</span>" +
+
+      "<span class='arrow'>" +
+
+      "→" +
+
+      "</span>" +
+
+      "<span class='to-status'>" +
+
+      escapeHtml(
+        toStatus
+      ) +
+
+      "</span>" +
+
+      "</div>" +
+
+      "</div>" +
+
+
+      // DETAILS
+
+      "<div class='details'>" +
+
+      "<div class='detail-row'>" +
+
+      "<span class='detail-label'>" +
+
+      "NAME: " +
+
+      "</span>" +
+
+      "<span class='detail-value'>" +
+
+      escapeHtml(
+        name
+      ) +
+
+      "</span>" +
+
+      "</div>" +
+
+
+      "<div class='detail-row'>" +
+
+      "<span class='detail-label'>" +
+
+      "SKU: " +
+
+      "</span>" +
+
+      "<span class='detail-value'>" +
+
+      escapeHtml(
+        sku
+      ) +
+
+      "</span>" +
+
+      "</div>" +
+
+
+      "<div class='detail-row'>" +
+
+      "<span class='detail-label'>" +
+
+      "MODEL: " +
+
+      "</span>" +
+
+      "<span class='detail-value'>" +
+
+      escapeHtml(
+        model
+      ) +
+
+      "</span>" +
+
+      "</div>" +
+
+
+      "<div class='detail-row'>" +
+
+      "<span class='detail-label'>" +
+
+      "SOURCE: " +
+
+      "</span>" +
+
+      "<span class='detail-value'>" +
+
+      escapeHtml(
+        source
+      ) +
+
+      "</span>" +
+
+      "</div>" +
+
+      "</div>" +
+
+      "</div>";
+
+
+    // ================================================
+    // NEXT SCAN
+    // ================================================
+
+    nextButton.classList.remove(
+      "hidden"
+    );
+
+
+    startButton.classList.add(
+      "hidden"
+    );
+
+
+    processing =
+      false;
+
+  }
 
 
   // ==================================================
@@ -1357,13 +1445,9 @@
     errorMessage
   ) {
 
-    /*
-     * Jangan buat apa-apa.
-     *
-     * html5-qrcode memang akan panggil
-     * function ini banyak kali ketika
-     * camera sedang mencari barcode.
-     */
+    // Jangan buat apa-apa.
+    // html5-qrcode akan panggil function
+    // ini berkali-kali ketika mencari barcode.
 
   }
 
@@ -1374,45 +1458,49 @@
 
   function startNextScan() {
 
+    if (
+      resultPollTimer
+    ) {
+
+      clearTimeout(
+        resultPollTimer
+      );
+
+      resultPollTimer =
+        null;
+
+    }
+
 
     processing =
       false;
 
-
     resultElement.innerHTML =
       "";
-
 
     nextButton.classList.add(
       "hidden"
     );
 
-
     startButton.classList.remove(
       "hidden"
     );
 
-
     startButton.disabled =
       false;
 
-
     startButton.innerText =
       "📷 START CAMERA";
-
 
     startButton.classList.remove(
       "stop"
     );
 
-
     startButton.onclick =
       startScanner;
 
-
     scanner =
       null;
-
 
     setStatus(
       "READY TO SCAN"
@@ -1462,7 +1550,6 @@
 
 
 </script>
-
 
 </body>
 
